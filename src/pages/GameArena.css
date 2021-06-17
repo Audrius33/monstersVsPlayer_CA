@@ -1,0 +1,151 @@
+.arenaZone {
+    width: 950px;
+    height: 80vh;
+    margin-top: 20px;
+
+}
+
+.arena {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.playerZone {
+    width: 350px;
+    z-index: 3;
+    height: 30vh;
+}
+
+.enemyZone {
+    width: 350px;
+    z-index: 3;
+    height: 30vh;
+}
+
+.attackZone {
+    width: 100px;
+    height: 30vh;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.d-flex {
+    display: flex;
+    justify-content: center;
+}
+
+.m-5 {
+    margin: 5px;
+}
+
+
+/*.playerTools {*/
+/*    z-index: 4;*/
+/*    display: flex;*/
+/*    flex-wrap: wrap;*/
+/*}*/
+
+.imageSize {
+    z-index: 10;
+    width: 320px;
+    height: 250px;
+}
+
+.healthBar {
+    height: 30px;
+}
+
+.healthC {
+    z-index: 15;
+}
+
+.weapons {
+    height: 300px;
+    width: 600px;
+
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+    border-style: outset;
+}
+
+.weaponsImgSize {
+    width: 100px;
+    height: 100px;
+    display: flex;
+
+}
+
+.weaponBox {
+    width: 175px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px;
+}
+
+.m-5 {
+    margin: 5px;
+}
+
+.armors {
+    height: 300px;
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+    border-style: outset;
+
+}
+
+.armorsImgSize {
+    width: 100px;
+    height: 100px;
+    display: flex;
+}
+
+.armorBox {
+    width: 175px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px;
+}
+
+.potion {
+    height: 300px;
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+    border-style: outset;
+
+}
+
+.potionImgSize {
+    width: 100px;
+    height: 100px;
+}
+
+.potionBox {
+    width: 175px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px;
+
+}
+
+.showInventory {
+    display: flex;
+    flex-flow: wrap;
+    width: 100%;
+
+}
