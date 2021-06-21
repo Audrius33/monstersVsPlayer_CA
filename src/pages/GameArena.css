@@ -42,21 +42,22 @@
     margin: 5px;
 }
 
-
-/*.playerTools {*/
-/*    z-index: 4;*/
-/*    display: flex;*/
-/*    flex-wrap: wrap;*/
-/*}*/
-
 .imageSize {
     z-index: 10;
     width: 320px;
     height: 250px;
 }
+.endGame {
+    margin: auto;
+
+}
 
 .healthBar {
     height: 30px;
+}
+.healthBarPlayer {
+    height: 30px;
+    overflow: hidden;
 }
 
 .healthC {

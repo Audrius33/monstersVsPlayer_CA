@@ -14,6 +14,9 @@ router.post('/sellWeapon', controller.sellWeapon)
 router.get('/getWeapons/:key', controller.getWeapons)
 router.post('/buyArmor', controller.buyArmor)
 router.post('/buyPotion', controller.buyPotion)
+router.post('/updatePlayerHp', controller.updateHealth)
+router.post('/usePotion', controller.usePotion)
+router.post('/findUsers', controller.allUsers)
 
 
 module.exports = router

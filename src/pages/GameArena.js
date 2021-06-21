@@ -17,7 +17,10 @@ function GameArena({
                        setBuyWeaponMsg,
                        buyWeaponMsg,
                        setHealth,
+                       healthBar,
+                       setHealthBar
                    }) {
+
 
     const Enemies = [
         {
@@ -37,13 +40,19 @@ function GameArena({
         }
     ]
 
+    let helpers = {
+        randomNum(num) {
+            return Math.round(Math.random() * num)
+        },
+    }
 
-    const [getHpCounter, setHpCounter] = useState(0)
+
     const [playerPercent, playerSetPercent] = useState(100)
     const [enemyPercent, enemySetPercent] = useState(100)
     const [getEnemyHp, setEnemyHp] = useState(100)
     const [currentEnemy, SetCurrentEnemy] = useState(0)
-
+    const [endGame, setEndGame] = useState("")
+    const [disable, setDisable] = useState(false);
 
     const history = useHistory()
 
@@ -55,34 +64,136 @@ function GameArena({
 
         http.get('/getWeapons/' + localStorage.getItem("keyBase")).then(res => {
             setInventory(res.findUser.inventory)
-            setHealth(res.findUser.health)
         })
-        SetCurrentEnemy(currentEnemy)
         setInventory(getInventory)
-
     }, [])
 
-    function attack() {
+    useEffect(() => {
+        let changeEnemy = helpers.randomNum(3)
+        if (getEnemyHp <= 0) {
+            SetCurrentEnemy(changeEnemy)
+            setEnemyHp(100)
+            enemySetPercent(100)
+        }
+    }, [getEnemyHp])
+
+
+    function armorDefence() {
+        let defence = 0
+        for (let i = 0; i < getInventory.length; i++) {
+            if (getInventory[i].defence === 8) {
+
+                let defenceNumber = getInventory[i].defence
+                let randomDefence = helpers.randomNum(defenceNumber)
+
+                defence = randomDefence
+            }
+            if (getInventory[i].defence === 3) {
+
+                let defenceNumber = getInventory[i].defence
+                let randomDefence = helpers.randomNum(defenceNumber)
+
+                defence = randomDefence
+
+            }
+            if (getInventory[i].defence === 7) {
+                let defenceAgainstEnemy = getInventory[i].defence
+                let defenceNumber = getInventory[i].defence
+                let randomDefence = helpers.randomNum(defenceNumber)
+                defence = randomDefence
+            }
+        }
+
+        return defence
+    }
+
+    function damageToEnemy() {
 
         if (getInventory[0].name === "magic Wand") {
-            console.log("magic wand")
             let wandDmg = getInventory[0].damage
+            let dmgPlayerDone = helpers.randomNum(wandDmg)
+            setEnemyHp(getEnemyHp - dmgPlayerDone)
+            enemySetPercent(enemyPercent - dmgPlayerDone)
+
         }
         if (getInventory[0].name === "sword") {
-            console.log("sword")
+
             let swordDmg = getInventory[0].damage
+            let dmgPlayerDone2 = helpers.randomNum(swordDmg)
+            setEnemyHp(getEnemyHp - dmgPlayerDone2)
+
+            enemySetPercent(enemyPercent - dmgPlayerDone2)
 
         }
         if (getInventory[0].name === "bow") {
-            console.log("bow")
             let bowDmg = getInventory[0].damage
-            console.log(getInventory[0].damage)
+            let dmgPlayerDone3 = helpers.randomNum(bowDmg)
+            setEnemyHp(getEnemyHp - dmgPlayerDone3)
+            enemySetPercent(enemyPercent - dmgPlayerDone3)
+            let doubleDmgToEnemy = helpers.randomNum(100)
+            if (doubleDmgToEnemy <= 30) {
+                setEnemyHp(getEnemyHp - dmgPlayerDone3 * 2)
+            }
         }
-
-        playerSetPercent(playerPercent - 8)
-        enemySetPercent(enemyPercent - 10)
     }
 
+    function damageToPlayer() {
+        let dmgEnemyDone = helpers.randomNum(Enemies[currentEnemy].damage)
+        dmgEnemyDone -= armorDefence()
+        playerSetPercent(playerPercent - dmgEnemyDone)
+        setHealth(health - dmgEnemyDone)
+
+        if (health - dmgEnemyDone <= 0) {
+            setEndGame("Game Over")
+            setDisable(true)
+
+        }
+        http.post('/updatePlayerHp', {
+            health: health - dmgEnemyDone,
+            healthBar: playerPercent - dmgEnemyDone,
+            key: localStorage.getItem("keyBase")
+        }).then(res => {
+
+        })
+        if (getInventory[0].name === "bow") {
+
+        }
+        if (getInventory[0].name === "magic Wand") {
+
+            let healPlayerByChance = helpers.randomNum(100)
+            if (healPlayerByChance <= 40) {
+                setHealth(health + 10)
+                playerSetPercent(playerPercent + 10)
+            }
+        }
+        if (getInventory[0].name === "sword") {
+            let chanceToBlockAttack = helpers.randomNum(100)
+            if (chanceToBlockAttack < 20) {
+                setHealth(health - 0)
+                playerSetPercent(playerPercent - 0)
+            }
+        }
+    }
+
+    function attack() {
+        damageToEnemy()
+        setTimeout(() => {
+            damageToPlayer()
+        }, 500)
+        setGold(gold + helpers.randomNum(10))
+    }
+
+    function use(item) {
+
+        localStorage.getItem("keyBase")
+        const sendData = {
+            potion: item,
+            key: localStorage.getItem("keyBase")
+        }
+        http.post('/usePotion', sendData).then(res => {
+            setHealth(res.updateUser.health)
+        })
+    }
 
     return (
         <div className="arenaZone">
@@ -93,23 +204,26 @@ function GameArena({
             <div className="arena">
                 <div className="playerZone">
                     <img className="imageSize" src={getImage} alt=""/>
-                    <div className="healthBar"
+                    <div className="healthBarPlayer"
                          style={{background: `linear-gradient(90deg, rgba(13,199,34,1) ${playerPercent}%, rgba(228,220,220,1) ${playerPercent}%)`}}>
                         <div className="playerHp">hp: {health}</div>
 
                     </div>
                 </div>
+
                 <div className="attackZone">
                     {getInventory.length > 0 ? null : "BUY WEAPON"}
                     <button
                         style={{margin: "5px"}}
                         onClick={attack}
-                        disabled={getInventory.length > 0 ? null : "buy weapon"}
+                        disabled={disable || getInventory.length === 0}
+
                     >Attack
                     </button>
+                    <div className="endGame">{endGame}</div>
                 </div>
                 <div className="enemyZone">
-                    <img className="imageSize" src={Enemies[0].image} alt=""/>
+                    <img className="imageSize" src={Enemies[currentEnemy].image} alt=""/>
                     <div className="healthBar" className="healthBar"
                          style={{background: `linear-gradient(90deg, rgba(13,199,34,1) ${enemyPercent}%, rgba(228,220,220,1) ${enemyPercent}%)`}}>
                         <div className="enemyHp">hp: {getEnemyHp}</div>
@@ -119,17 +233,25 @@ function GameArena({
             <div className="m-5">
                 gold: {gold}
             </div>
-            <div className="showInventory">
-                {getInventory.map((item, index) =>
-                    <div style={{margin: "auto"}} key={index}>
-                        <img className="potionImgSize m-5" src={item.img} alt=""/>
-                    </div>
-                )}
+            <div className="showInventory"> {!!getInventory ?
+                <div className="d-flex">
+                    {getInventory.map((item, index) => {
+                            if (item.type === "potion") {
+                                return <div key={index} style={{display: "flex", flexDirection: "column"}}>
+                                    <img className="potionImgSize m-5" src={item.img} alt=""/>
+                                    <button onClick={() => use(item)}>use Potion</button>
+                                </div>
+                            } else {
+                                return <div key={index}>
+                                    <img className="potionImgSize m-5" src={item.img} alt=""/>
+                                </div>
+                            }
+                        }
+                    )}
+                </div>
+                : null}
             </div>
-
-
         </div>
-
     );
 }
 

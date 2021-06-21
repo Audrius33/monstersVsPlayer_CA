@@ -14,11 +14,7 @@ function UserInventory({setInventory, getInventory, gold, setWeapons, setGold}) 
     useEffect(() => {
         http.get('/getWeapons/' + localStorage.getItem("keyBase")).then(res => {
             setInventory(res.findUser.inventory)
-
         })
-
-        // setInventory(getInventory)
-
     }, [])
 
     function sellItem(item) {
@@ -30,9 +26,7 @@ function UserInventory({setInventory, getInventory, gold, setWeapons, setGold}) 
         http.post('/sellWeapon', sendData).then(res => {
             setWeapons(res.updatedUser.inventory)
             setGold(res.updatedUser.gold)
-
         })
-
     }
 
     return (

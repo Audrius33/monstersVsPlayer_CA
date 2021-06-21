@@ -26,23 +26,21 @@ module.exports = {
                 const users = new usersDb
                 users.password1 = hash
                 users.username = username
-                users.secretKey = username
+                users.secretKey = randomId(10, 'aA0')
                 users.password1 = passwordHash
                 users.password2 = password2
                 users.health = 100
-                users.gold = 10000
+                users.gold = 100
                 users.inventory = []
                 users.image = "https://streetfighter.com/wp-content/uploads/2015/10/facebook-featured.jpg"
                 users.save().then(data => {
                     res.send({success: false, message: "A user account was created"})
                 })
-
-
             })
-
         })
     },
     findUser: async (req, res) => {
+
         const {
             user,
             password
@@ -60,9 +58,8 @@ module.exports = {
                 bcrypt.compare(password, findUser.password1, function (err, resSend) {
                     if (resSend) {
                         res.send({success: true, username: user, findUser})
-                    } else {
-                        res.send({success: false,})
                     }
+
                 });
             })
         })
@@ -75,11 +72,11 @@ module.exports = {
         const data = req.body.weapon
         data.id = randomId(10, 'aA0')
         const key = req.body.key
-        const findUser = await usersDb.findOne({username: key})
+        const findUser = await usersDb.findOne({secretKey: key})
         let updatedUser
         if (findUser.gold >= data.price) {
             updatedUser = await usersDb.findOneAndUpdate(
-                {username: key}, {
+                {secretKey: key}, {
                     $set: {gold: findUser.gold - data.price},
                     $push: {inventory: data}
                 }, {
@@ -93,10 +90,10 @@ module.exports = {
 
         const data = req.body.item
         const key = req.body.key
-        const findUser = await usersDb.findOne({username: key})
+        const findUser = await usersDb.findOne({secretKey: key})
         let updatedUser
         updatedUser = await usersDb.findOneAndUpdate(
-            {username: key}, {
+            {secretKey: key}, {
                 $set: {gold: findUser.gold + (data.sellPrice)},
                 $pull: {inventory: {id: data.id}}
             }, {
@@ -107,18 +104,18 @@ module.exports = {
     },
     getWeapons: async (req, res) => {
         const key = req.params.key
-        const findUser = await usersDb.findOne({username: key})
+        const findUser = await usersDb.findOne({secretKey: key})
         res.send({findUser})
     },
     buyArmor: async (req, res) => {
         const data2 = req.body.armor
         data2.id = randomId(10, 'aA0')
         const key = req.body.key
-        const findUser2 = await usersDb.findOne({username: key})
+        const findUser2 = await usersDb.findOne({secretKey: key})
         let updatedUser2
         if (findUser2.gold >= data2.price) {
             updatedUser2 = await usersDb.findOneAndUpdate(
-                {username: key}, {
+                {secretKey: key}, {
                     $set: {gold: findUser2.gold - data2.price},
                     $push: {inventory: data2}
                 }, {
@@ -131,11 +128,11 @@ module.exports = {
         const data3 = req.body.potion
         data3.id = randomId(10, 'aA0')
         const key = req.body.key
-        const findUser2 = await usersDb.findOne({username: key})
+        const findUser2 = await usersDb.findOne({secretKey: key})
         let updatedUser2
         if (findUser2.gold >= data3.price) {
             updatedUser2 = await usersDb.findOneAndUpdate(
-                {username: key}, {
+                {secretKey: key}, {
                     $set: {gold: findUser2.gold - data3.price},
                     $push: {inventory: data3}
                 }, {
@@ -144,5 +141,28 @@ module.exports = {
         }
         res.send({success: true, updatedUser2})
     },
-
+    updateHealth: async (req, res) => {
+        const {
+            health,
+            key
+        } = req.body
+        let updateUser3 = await usersDb.findOneAndUpdate({secretKey: key}, {$set: {health: health}}, {new: true})
+        res.send({success: true, updateUser3})
+    },
+    usePotion: async (req, res) => {
+        const {
+            potion,
+            key,
+        } = req.body
+        const findUser3 = await usersDb.findOne({secretKey: key})
+        let updateUser = await usersDb.findOneAndUpdate({secretKey: key}, {
+            $set: {health: findUser3.health + potion.heals},
+            $pull: {inventory: {id: potion.id}}
+        }, {new: true})
+        res.send({updateUser})
+    },
+    allUsers: async (req, res) => {
+        const findAll = await usersDb.find()
+        res.send({success: true, findAll})
+    }
 }

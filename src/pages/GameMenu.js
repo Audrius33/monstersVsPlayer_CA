@@ -2,15 +2,15 @@ import React, {useEffect, useState} from 'react';
 import {useHistory} from "react-router-dom"
 
 
-const GameMenu = ({gold, health}) => {
+const GameMenu = ({gold, health, name,setName}) => {
 
-    const [name, setName] = useState('')
+
 
     const history = useHistory()
 
 
     useEffect(() => {
-        setName(localStorage.getItem('keyBase'))
+        setName(name)
 
     }, [])
 

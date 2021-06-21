@@ -19,18 +19,17 @@ import UserInventory from "./pages/UserInventory";
 function App() {
 
     const [gold, setGold] = useState(0)
-    const [health, setHealth] = useState(0)
+    const [health, setHealth] = useState(100)
     const [getImage, setImage] = useState([])
     const [getInventory, setInventory] = useState([])
     const [getWeapons, setWeapons] = useState([])
     const [buyWeaponMsg, setBuyWeaponMsg] = useState('')
+    const [name, setName] = useState('')
 
 
     useEffect(() => {
         if (!!localStorage.getItem("keyBase")) {
-
             http.get('/getInfo/' + localStorage.getItem("keyBase")).then(res => {
-
                 setInventory(res.findUser.inventory)
                 setImage(res.findUser.image)
                 setHealth(res.findUser.health)
@@ -38,8 +37,6 @@ function App() {
                 setWeapons(res.findUser.inventory)
             })
         }
-
-
     }, [])
 
     return (
@@ -62,6 +59,8 @@ function App() {
                                 setGold={setGold}
                                 setHealth={setHealth}
                                 setImage={setImage}
+                                setName={setName}
+                                gold={gold}
                             />
                         </Route>
                         <Route path="/RegisterUser">
@@ -71,7 +70,8 @@ function App() {
                             <GameMenu
                                 gold={gold}
                                 health={health}
-
+                                name={name}
+                                setName={setName}
                             />
                         </Route>
                         <Route path="/Arena">
@@ -105,8 +105,6 @@ function App() {
                                 getInventory={getInventory}
                                 gold={gold}
                                 setGold={setGold}
-                                // setWeapons={setWeapons}
-
                             />
                         </Route>
                     </Switch>
