@@ -17,8 +17,7 @@ function GameArena({
                        setBuyWeaponMsg,
                        buyWeaponMsg,
                        setHealth,
-                       healthBar,
-                       setHealthBar
+
                    }) {
 
 
@@ -66,16 +65,21 @@ function GameArena({
             setInventory(res.findUser.inventory)
         })
         setInventory(getInventory)
+
     }, [])
 
     useEffect(() => {
         let changeEnemy = helpers.randomNum(3)
+        console.log(changeEnemy)
+        console.log(getEnemyHp)
         if (getEnemyHp <= 0) {
-            SetCurrentEnemy(changeEnemy)
+            console.log("change enemy")
+            console.log(Enemies)
+            SetCurrentEnemy(Enemies[changeEnemy].image)
             setEnemyHp(100)
             enemySetPercent(100)
         }
-    }, [getEnemyHp])
+    }, [])
 
 
     function armorDefence() {
@@ -103,7 +107,6 @@ function GameArena({
                 defence = randomDefence
             }
         }
-
         return defence
     }
 
@@ -121,9 +124,8 @@ function GameArena({
             let swordDmg = getInventory[0].damage
             let dmgPlayerDone2 = helpers.randomNum(swordDmg)
             setEnemyHp(getEnemyHp - dmgPlayerDone2)
-
+            console.log(getEnemyHp - dmgPlayerDone2)
             enemySetPercent(enemyPercent - dmgPlayerDone2)
-
         }
         if (getInventory[0].name === "bow") {
             let bowDmg = getInventory[0].damage
@@ -139,6 +141,7 @@ function GameArena({
 
     function damageToPlayer() {
         let dmgEnemyDone = helpers.randomNum(Enemies[currentEnemy].damage)
+        console.log(currentEnemy)
         dmgEnemyDone -= armorDefence()
         playerSetPercent(playerPercent - dmgEnemyDone)
         setHealth(health - dmgEnemyDone)
@@ -197,8 +200,8 @@ function GameArena({
 
     return (
         <div className="arenaZone">
-            <h4>
-                game arena
+            <h4 style={{color: "white"}}>
+                Game arena
             </h4>
             <button onClick={goToMenu}>Back to Menu</button>
             <div className="arena">
@@ -211,7 +214,7 @@ function GameArena({
                     </div>
                 </div>
 
-                <div className="attackZone">
+                <div className="attackZone" style={{color: "white"}}>
                     {getInventory.length > 0 ? null : "BUY WEAPON"}
                     <button
                         style={{margin: "5px"}}
@@ -220,9 +223,10 @@ function GameArena({
 
                     >Attack
                     </button>
-                    <div className="endGame">{endGame}</div>
+                    <h4 className="endGame" style={{color: "red"}}>{endGame}</h4>
                 </div>
                 <div className="enemyZone">
+
                     <img className="imageSize" src={Enemies[currentEnemy].image} alt=""/>
                     <div className="healthBar" className="healthBar"
                          style={{background: `linear-gradient(90deg, rgba(13,199,34,1) ${enemyPercent}%, rgba(228,220,220,1) ${enemyPercent}%)`}}>
@@ -230,9 +234,9 @@ function GameArena({
                     </div>
                 </div>
             </div>
-            <div className="m-5">
+            <h4 className="m-5" style={{color: "white"}}>
                 gold: {gold}
-            </div>
+            </h4>
             <div className="showInventory"> {!!getInventory ?
                 <div className="d-flex">
                     {getInventory.map((item, index) => {

@@ -1,3 +1,11 @@
+body {
+    background-image: url("https://i.imgur.com/l6Xgvsw.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .arenaZone {
     width: 950px;
     height: 80vh;
@@ -43,7 +51,7 @@
 }
 
 .imageSize {
-    z-index: 10;
+    z-index: 3;
     width: 320px;
     height: 250px;
 }

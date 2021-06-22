@@ -30,7 +30,7 @@ module.exports = {
                 users.password1 = passwordHash
                 users.password2 = password2
                 users.health = 100
-                users.gold = 100
+                users.gold = 10000
                 users.inventory = []
                 users.image = "https://streetfighter.com/wp-content/uploads/2015/10/facebook-featured.jpg"
                 users.save().then(data => {
@@ -53,13 +53,14 @@ module.exports = {
             bcrypt.hash(password, salt, async function (err, hash) {
                 passwordHash = hash
                 const findUser = await usersDb.findOne({username: user})
-
+                if (findUser === null) {
+                    return res.send({error: true, message: "user was not found"})
+                }
                 if (err) return next(err);
                 bcrypt.compare(password, findUser.password1, function (err, resSend) {
                     if (resSend) {
-                        res.send({success: true, username: user, findUser})
+                        res.send({error: false, username: user, findUser})
                     }
-
                 });
             })
         })

@@ -29,7 +29,7 @@ function RegisterUser() {
             <input style={{margin: '5px'}} ref={userNameRef} type="text" placeholder="username"/>
             <input style={{margin: '5px'}} ref={passwordRef1} type="password" placeholder="Password"/>
             <input style={{margin: '5px'}} ref={passwordRef2} type="password" placeholder="Confirm Password"/>
-            <h5 className="errorStyle">{error}</h5>
+            <h5 className="errorStyle" style={{color: "white"}}>{error}</h5>
             <button style={{margin: '5px'}} onClick={inputData}>Register</button>
         </div>
     );

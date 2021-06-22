@@ -138,15 +138,15 @@ function InventoryShop({gold, setGold}) {
 
     return (
         <div>
-            <h4>Your Gold: {gold}</h4>
+            <h4 style={{color: "white"}}>Your Gold: {gold}</h4>
             <button onClick={goToMenu}>Back to Menu</button>
-            <h4>Buy Weapons, Armors and potions</h4>
+            <h4 style={{color: "white"}}>Buy Weapons, Armors and potions</h4>
             <div className="weapons">
                 {weapons.map((item, index) =>
                     <div className="weaponBox" key={index}>
                         <img className="weaponsImgSize" src={item.img} alt=""/>
-                        <h3>Damage: {item.damage}</h3>
-                        <h5>Effect: {item.effect}</h5>
+                        <h3 style={{color: "white"}}>Damage: {item.damage}</h3>
+                        <h5 style={{color: "white"}}>Effect: {item.effect}</h5>
                         <div>
                             <button className="m-5" onClick={() => buyWeapon(index)}>buy: {item.price}</button>
                         </div>
@@ -157,7 +157,7 @@ function InventoryShop({gold, setGold}) {
                 {armor.map((item, index2) =>
                     <div className="armorBox" key={index2}>
                         <img className="armorsImgSize" src={item.img} alt=""/>
-                        <h3>Defence: {item.defence}</h3>
+                        <h3 style={{color: "white"}}>Defence: {item.defence}</h3>
                         <div>
                             <button className="m-5" onClick={() => buyArmor(index2)}>buy: {item.price}</button>
                         </div>
@@ -167,7 +167,7 @@ function InventoryShop({gold, setGold}) {
                 {potion.map((item, index3) =>
                     <div className="potionBox" key={index3}>
                         <img className="potionImgSize" src={item.img} alt=""/>
-                        <h3>Heals: {item.heals} hp</h3>
+                        <h3 style={{color: "white"}}>Heals: {item.heals} hp</h3>
                         <div>
                             <button className="m-5" onClick={() => buyPotion(index3)}>buy: {item.price}</button>
                         </div>

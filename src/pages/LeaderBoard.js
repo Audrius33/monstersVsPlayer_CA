@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useHistory} from "react-router-dom"
 import http from "../Plugins/Fetch";
+import '../App.css';
 
 
 function LeaderBoard(props) {
@@ -21,7 +22,7 @@ function LeaderBoard(props) {
 
     return (
         <div>
-            <h4>
+            <h4 style={{color: "white"}}>
                 LeaderBoard
             </h4>
             <button onClick={goToMenu}>Back to Menu</button>
@@ -29,11 +30,11 @@ function LeaderBoard(props) {
                 <div>
                     {getPlayers.map((item, index) => {
                             return <div key={index}>
-                                <div>
-                                    <p>
+                                <div style={{color: "white"}}>
+                                    <p className="borders">
                                         Player: {item.username}
                                     </p>
-                                    <p>
+                                    <p className="borders">
                                         Gold: {item.gold}
                                     </p>
                                 </div>
@@ -41,7 +42,6 @@ function LeaderBoard(props) {
                         }
                     )}
                 </div>
-
             </div>
 
         </div>

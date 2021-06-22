@@ -4,8 +4,6 @@ import {useHistory} from "react-router-dom"
 
 const GameMenu = ({gold, health, name,setName}) => {
 
-
-
     const history = useHistory()
 
 
@@ -35,10 +33,10 @@ const GameMenu = ({gold, health, name,setName}) => {
 
     return (
         <div className="menuStyle">
-            <h5>User: {name}</h5>
-            <button className="logOutBtn" onClick={logClientOut}>Log Out</button>
-            <h3>Game menu</h3>
-            <div className="d-flex">
+            <h5 style={{color: "white"}}>User: {name}</h5>
+            <button className="logOutBtn"   onClick={logClientOut}>Log Out</button>
+            <h3 style={{color: "white"}}>Game menu</h3>
+            <div className="d-flex" style={{color: "white"}}>
                 <h4 className="m-5" >Gold: {gold}</h4>
                 <h4 className="m-5">Health: {health}</h4>
             </div>

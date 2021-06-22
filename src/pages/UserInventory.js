@@ -31,14 +31,14 @@ function UserInventory({setInventory, getInventory, gold, setWeapons, setGold}) 
 
     return (
         <div>
-            <h4>
+            <h4 style={{color: "white"}}>
                 User Inventory
             </h4>
             <button onClick={goToMenu}>Back to Menu</button>
-            <div className="m-5">
+            <h4 className="m-5" style={{color: "white"}}>
                 gold: {gold}
-            </div>
-            <div className="showInventory">
+            </h4 >
+            <div style={{color: "white"}} className="showInventory">
                 {getInventory.map((item, index) =>
                     <div key={index} style={{margin: "auto"}}>
                         <img className="potionImgSize m-5" src={item.img} alt=""/>

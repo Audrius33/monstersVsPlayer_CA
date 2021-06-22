@@ -19,7 +19,7 @@ import UserInventory from "./pages/UserInventory";
 function App() {
 
     const [gold, setGold] = useState(0)
-    const [health, setHealth] = useState(100)
+    const [health, setHealth] = useState(0)
     const [getImage, setImage] = useState([])
     const [getInventory, setInventory] = useState([])
     const [getWeapons, setWeapons] = useState([])
@@ -44,8 +44,8 @@ function App() {
             <Router>
                 <div className="App">
                     <div className="d-flex">
-                        <Link className="style-link" to="/Login">Login</Link>
-                        <Link className="style-link" to="/RegisterUser">Register</Link>
+                        <Link className="style-link" to="/Login"><h4>Login</h4></Link>
+                        <Link className="style-link" to="/RegisterUser"><h4>Register</h4></Link>
                         <Link className="style-link" to="/gameMenu"></Link>
                         <Link className="style-link" to="/Arena"></Link>
                         <Link className="style-link" to="/InventoryShop"></Link>

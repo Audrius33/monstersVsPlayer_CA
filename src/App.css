@@ -9,7 +9,7 @@
 .style-link {
   text-decoration: none;
   margin: 10px 5px 5px 10px;
-  color: darkgray;
+  color: #f6f3f3;
 }
 .registerBox {
   display: flex;
@@ -33,7 +33,6 @@ margin: 5px;
 .menuList {
   display: flex;
   flex-wrap: wrap;
-  background-color: #ddc039;
   border-radius: 10px;
 }
 .menuItem {
@@ -47,5 +46,8 @@ margin: 5px;
 }
 .menuListBtn {
   cursor: pointer;
+}
+.borders {
+  border-bottom: double 1px white
 }
 
