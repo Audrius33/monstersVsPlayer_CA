@@ -38,9 +38,10 @@ function GameArena({
             damage: 15
         }
     ]
-
+    console.log(Enemies[0].image)
     let helpers = {
         randomNum(num) {
+
             return Math.round(Math.random() * num)
         },
     }
@@ -51,7 +52,8 @@ function GameArena({
     const [getEnemyHp, setEnemyHp] = useState(100)
     const [currentEnemy, SetCurrentEnemy] = useState(0)
     const [endGame, setEndGame] = useState("")
-    const [disable, setDisable] = useState(false);
+    const [disable, setDisable] = useState(false)
+
 
     const history = useHistory()
 
@@ -67,19 +69,18 @@ function GameArena({
         setInventory(getInventory)
 
     }, [])
-
+    console.log(getEnemyHp)
     useEffect(() => {
+
         let changeEnemy = helpers.randomNum(3)
-        console.log(changeEnemy)
-        console.log(getEnemyHp)
+        SetCurrentEnemy(currentEnemy)
+
         if (getEnemyHp <= 0) {
-            console.log("change enemy")
-            console.log(Enemies)
-            SetCurrentEnemy(Enemies[changeEnemy].image)
+            SetCurrentEnemy(changeEnemy)
             setEnemyHp(100)
             enemySetPercent(100)
         }
-    }, [])
+    }, [getEnemyHp])
 
 
     function armorDefence() {
@@ -124,7 +125,7 @@ function GameArena({
             let swordDmg = getInventory[0].damage
             let dmgPlayerDone2 = helpers.randomNum(swordDmg)
             setEnemyHp(getEnemyHp - dmgPlayerDone2)
-            console.log(getEnemyHp - dmgPlayerDone2)
+
             enemySetPercent(enemyPercent - dmgPlayerDone2)
         }
         if (getInventory[0].name === "bow") {
@@ -194,7 +195,9 @@ function GameArena({
             key: localStorage.getItem("keyBase")
         }
         http.post('/usePotion', sendData).then(res => {
+            setInventory(res.updateUser.inventory)
             setHealth(res.updateUser.health)
+
         })
     }
 
