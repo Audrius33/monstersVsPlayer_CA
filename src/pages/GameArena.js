@@ -38,7 +38,8 @@ function GameArena({
             damage: 15
         }
     ]
-    console.log(Enemies[0].image)
+
+
     let helpers = {
         randomNum(num) {
 
@@ -69,7 +70,7 @@ function GameArena({
         setInventory(getInventory)
 
     }, [])
-    console.log(getEnemyHp)
+
     useEffect(() => {
 
         let changeEnemy = helpers.randomNum(3)
@@ -141,8 +142,8 @@ function GameArena({
     }
 
     function damageToPlayer() {
+
         let dmgEnemyDone = helpers.randomNum(Enemies[currentEnemy].damage)
-        console.log(currentEnemy)
         dmgEnemyDone -= armorDefence()
         playerSetPercent(playerPercent - dmgEnemyDone)
         setHealth(health - dmgEnemyDone)
