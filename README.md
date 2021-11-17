@@ -1,13 +1,9 @@
 # monstersVsPlayer_CA
 
-This project was bootstrapped with Create React App.
-
-Project name
-# monstersVsPlayer_CA
-
 Register account for login. After login you will get 100gold and 100health. You won't be able to fight for the first time if you will not have any weapon bought.
 The app's purpose is to fight monsters, buy weapons with special abilities. Each attack you will earn some gold. 
 There is a leaderboard to see your gold as winner points.
+
 ## Setup
 
 git clone https://github.com/Audrius33/monstersVsPlayer_CA.git
